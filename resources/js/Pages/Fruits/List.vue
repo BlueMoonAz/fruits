@@ -25,6 +25,13 @@ onMounted(()=>{
               setPagedItems();
     });
 })
+
+import Add from '@/Pages/Fruits/Add.vue' //追加
+const addRef = ref();　//追加
+
+import Edit from '@/Pages/Fruits/Edit.vue'　//追加
+const editRef = ref();　//追加
+
 </script>
 
 <template>
@@ -41,7 +48,7 @@ onMounted(()=>{
     </el-table-column>
     <el-table-column fixed="right" label="操作" width="120">
       <template #default="scope">
-        <el-button link type="primary" >
+        <el-button link type="primary" @click.prevent="editRef.open(pagedItems[scope.$index])"><!--編集-->
           編集
         </el-button>
         <el-button link type="primary" >
@@ -51,4 +58,9 @@ onMounted(()=>{
     </el-table-column>
   </el-table>
   <el-pagination layout="prev, pager, next" :total="itemsTotal" @current-change="setPage"></el-pagination>
+  <el-button @click="addRef.open()">
+    新規作成
+  </el-button>
+  <Add ref="addRef"></Add>
+  <Edit ref="editRef"></Edit>
 </template>
