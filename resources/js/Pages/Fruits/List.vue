@@ -32,6 +32,7 @@ const addRef = ref();　//追加
 import Edit from '@/Pages/Fruits/Edit.vue'　//追加
 const editRef = ref();　//追加
 
+import {deleteOpen} from '@/Pages/Fruits/Delete.js' //追加
 </script>
 
 <template>
@@ -51,7 +52,8 @@ const editRef = ref();　//追加
         <el-button link type="primary" @click.prevent="editRef.open(pagedItems[scope.$index])"><!--編集-->
           編集
         </el-button>
-        <el-button link type="primary" >
+        <el-button link type="primary" @click.prevent="deleteOpen(pagedItems[scope.$index])" 
+        >
           削除
         </el-button>
       </template>
