@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted,ref } from 'vue';
-import axios from 'axios';
+/* import axios from 'axios'; */
 
 const items = ref(null);
 const itemsTotal = ref(0);
@@ -18,12 +18,7 @@ const setPagedItems = () => {
 }
 
 onMounted(()=>{
-  axios.get('/api/list')
-            .then((res)=>{
-              items.value=res.data;
-              itemsTotal.value=items.value.length;
-              setPagedItems();
-    });
+  fs.getList();
 })
 
 import Add from '@/Pages/Fruits/Add.vue' //追加
@@ -33,6 +28,18 @@ import Edit from '@/Pages/Fruits/Edit.vue'　//追加
 const editRef = ref();　//追加
 
 import {deleteOpen} from '@/Pages/Fruits/Delete.js' //追加
+
+import { useFruitsStore } from '@/assets/FruitsStore.js' //追加
+const fs = useFruitsStore(); //追加
+
+import {getActivePinia} from "pinia" //追加
+const activePinia = getActivePinia(); //追加
+
+fs.$subscribe(()=>{
+  items.value=fs.list;
+  itemsTotal.value=items.value.length;
+  setPagedItems();
+});
 </script>
 
 <template>
@@ -52,7 +59,7 @@ import {deleteOpen} from '@/Pages/Fruits/Delete.js' //追加
         <el-button link type="primary" @click.prevent="editRef.open(pagedItems[scope.$index])"><!--編集-->
           編集
         </el-button>
-        <el-button link type="primary" @click.prevent="deleteOpen(pagedItems[scope.$index])" 
+        <el-button link type="primary" @click.prevent="deleteOpen(pagedItems[scope.$index],activePinia)" 
         >
           削除
         </el-button>
