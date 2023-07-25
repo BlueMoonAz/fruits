@@ -10,7 +10,7 @@ class FruitsController extends Controller
     //
     public function list()
     {
-        return Fruit::orderBy('id')->get();
+        return Fruit::orderBy('id')->paginate(10);
     }
 
     public function update(Request $request,Fruit $fruit)

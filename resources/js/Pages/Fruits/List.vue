@@ -1,49 +1,44 @@
 <script setup>
 import { onMounted,ref } from 'vue';
-/* import axios from 'axios'; */
 
 const items = ref(null);
 const itemsTotal = ref(0);
-const page=ref(1);
-const pageSize=10;
-const pagedItems = ref(null);
+const page = ref(1);
 
 const setPage = (val)=>{
-  page.value=val;
-  setPagedItems();
+  page.value = val;
+  reLoadItems();
 }
 
-const setPagedItems = () => {
-  pagedItems.value=items.value.slice(pageSize * page.value - pageSize, pageSize * page.value);
+import axios from 'axios';
+const reLoadItems = ()=>{
+  axios.get('/api/list',{
+                params:{
+                    page:page.value
+                }
+            })
+            .then((res)=>{
+              items.value = res.data.data;
+              itemsTotal.value = res.data.total;
+            });
 }
 
 onMounted(()=>{
-  fs.getList();
+    reLoadItems();
 })
 
-import Add from '@/Pages/Fruits/Add.vue' //追加
-const addRef = ref();　//追加
+import Edit from '@/Pages/Fruits/Edit.vue'
+const editRef = ref();
 
-import Edit from '@/Pages/Fruits/Edit.vue'　//追加
-const editRef = ref();　//追加
+import Add from '@/Pages/Fruits/Add.vue'
+const addRef = ref();
 
-import {deleteOpen} from '@/Pages/Fruits/Delete.js' //追加
-
-import { useFruitsStore } from '@/assets/FruitsStore.js' //追加
-const fs = useFruitsStore(); //追加
-
-import {getActivePinia} from "pinia" //追加
-const activePinia = getActivePinia(); //追加
-
-fs.$subscribe(()=>{
-  items.value=fs.list;
-  itemsTotal.value=items.value.length;
-  setPagedItems();
-});
+import Delete from '@/Pages/Fruits/Delete.vue'
+const deleteRef = ref();
 </script>
 
 <template>
-    <el-table :data="pagedItems" style="width: 100%">
+    <el-table :data="items" style="width: 100%">
     <el-table-column prop="id" label="id" width="80" />
     <el-table-column prop="name" label="名称" />
     <el-table-column prop="price" label="価格" width="100"
@@ -56,11 +51,12 @@ fs.$subscribe(()=>{
     </el-table-column>
     <el-table-column fixed="right" label="操作" width="120">
       <template #default="scope">
-        <el-button link type="primary" @click.prevent="editRef.open(pagedItems[scope.$index])"><!--編集-->
+        <el-button link type="primary" 
+          @click.prevent="editRef.open(items[scope.$index])">
           編集
         </el-button>
-        <el-button link type="primary" @click.prevent="deleteOpen(pagedItems[scope.$index],activePinia)" 
-        >
+        <el-button link type="primary"
+          @click.prevent="deleteRef.open(items[scope.$index])">
           削除
         </el-button>
       </template>
@@ -70,6 +66,7 @@ fs.$subscribe(()=>{
   <el-button @click="addRef.open()">
     新規作成
   </el-button>
-  <Add ref="addRef"></Add>
-  <Edit ref="editRef"></Edit>
+  <Add ref="addRef" @reLoad="reLoadItems"></Add>
+  <Edit ref="editRef" @reLoad="reLoadItems"></Edit>
+  <Delete ref="deleteRef" @reLoad="reLoadItems"></Delete>
 </template>

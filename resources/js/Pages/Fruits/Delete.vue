@@ -1,8 +1,13 @@
-import axios from 'axios';
-import {ElNotification,ElMessageBox } from 'element-plus'
-import {useFruitsStore} from '@/assets/FruitsStore.js' //追加
+<script setup>
 
-const deleteOpen=(item,pinia)=>{
+import axios from 'axios';
+import {ElNotification,ElMessageBox } from 'element-plus';
+import {defineEmits} from 'vue';
+
+const emit = defineEmits(['reLoad']);
+
+const open=(item)=>{
+  
         ElMessageBox.confirm(
           item.name+'を削除します。よろしいですか?',
           'Warning',
@@ -19,8 +24,7 @@ const deleteOpen=(item,pinia)=>{
                   type: 'success',
                   message: item.name+'を削除しました',
                 });
-                const fs=useFruitsStore(pinia); //追加
-                fs.getList(); //追加
+                emit('reLoad');
               }).catch((error)=>{
                 ElNotification({
                   type: 'error',
@@ -33,6 +37,10 @@ const deleteOpen=(item,pinia)=>{
               type: 'info',
               message: '削除をキャンセルしました',
             });
-          })
+          });
 }
-export {deleteOpen}
+
+defineExpose({
+  open,
+})
+</script>

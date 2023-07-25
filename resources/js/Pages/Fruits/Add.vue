@@ -1,16 +1,14 @@
 <script setup>
-import {reactive,ref} from 'vue'
+import {reactive,ref,defineEmits} from 'vue'
 import axios from 'axios';
 import {ElNotification} from 'element-plus'
-import {useFruitsStore} from '@/assets/FruitsStore.js' //追加
-
-const fs = useFruitsStore(); //追加
 
 const isVisible=ref(false);
 const form=reactive({
   name:'',
   price:null,
 });
+const emit = defineEmits(['reLoad']);
 const create=()=>{
   axios.post('/api/create',form)
     .then((res)=>{
@@ -19,7 +17,7 @@ const create=()=>{
         message: form.name+'を作成しました',
         type: 'success',
       })
-      fs.getList();
+      emit('reLoad');
       isVisible.value=false;
     }).catch((error)=>{
       ElNotification({

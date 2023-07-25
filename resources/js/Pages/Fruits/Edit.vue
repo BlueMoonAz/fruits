@@ -1,10 +1,9 @@
 <script setup>
-import {reactive,ref} from 'vue'
+import {reactive,ref,defineEmits} from 'vue'
 import axios from 'axios';
 import {ElNotification} from 'element-plus'
-import {useFruitsStore} from '@/assets/FruitsStore.js' //追加
 
-const fs = useFruitsStore(); //追加
+const emit = defineEmits(['reLoad']);
 const isVisible=ref(false);
 const form=reactive({
   id:null,
@@ -19,7 +18,7 @@ const update=()=>{
         message: form.name+'を更新しました',
         type: 'success',
       })
-      fs.getList();
+      emit('reLoad');
     }).catch((error)=>{
       ElNotification({
         title: 'Error',
