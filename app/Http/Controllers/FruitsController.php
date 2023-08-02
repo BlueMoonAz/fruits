@@ -8,8 +8,13 @@ use App\Models\Fruit;
 class FruitsController extends Controller
 {
     //
-    public function list()
+    public function list(Request $request)
     {
+        $filter = $request->query('filter');
+
+        if($filter){
+            return Fruit::where('name','LIKE','%'.$filter.'%')->orderBy('id')->paginate(10);
+        }
         return Fruit::orderBy('id')->paginate(10);
     }
 

@@ -11,11 +11,13 @@ const setPage = (val)=>{
 }
 
 import axios from 'axios';
-const reLoadItems = ()=>{
+const reLoadItems = (filter='')=>{
+  const params={page:page.value};
+  if(filter!==''){
+    params['filter']=filter;
+  } 
   axios.get('/api/list',{
-                params:{
-                    page:page.value
-                }
+                params:params
             })
             .then((res)=>{
               items.value = res.data.data;
@@ -35,9 +37,12 @@ const addRef = ref();
 
 import Delete from '@/Pages/Fruits/Delete.vue'
 const deleteRef = ref();
+
+import Filter from '@/Pages/Fruits/Filter.vue'
 </script>
 
 <template>
+    <Filter @reLoad="reLoadItems"></Filter>
     <el-table :data="items" style="width: 100%">
     <el-table-column prop="id" label="id" width="80" />
     <el-table-column prop="name" label="名称" />

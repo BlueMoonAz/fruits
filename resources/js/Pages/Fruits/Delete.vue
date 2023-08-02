@@ -44,3 +44,4 @@ defineExpose({
   open,
 })
 </script>
+<template></template>
