@@ -11,7 +11,7 @@ const form=reactive({
   price:null,
 });
 const update=()=>{
-  axios.put('/api/update/'+form.id,form)
+  axios.put('/api/fruits/update/'+form.id,form)
     .then((res)=>{
       ElNotification({
         title: 'Success',

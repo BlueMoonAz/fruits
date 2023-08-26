@@ -20,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/list',[FruitsController::class,'list']);
-Route::put('/update/{fruit}',[FruitsController::class,'update']);
-Route::post('/create',[FruitsController::class,'create']);
-Route::delete('/delete/{fruit}',[FruitsController::class,'delete']);
+Route::get('/fruits/list',[FruitsController::class,'list']);
+Route::put('/fruits/update/{fruit}',[FruitsController::class,'update']);
+Route::post('/fruits/create',[FruitsController::class,'create']);
+Route::delete('/fruits/delete/{fruit}',[FruitsController::class,'delete']);

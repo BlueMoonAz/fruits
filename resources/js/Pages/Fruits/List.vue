@@ -16,7 +16,7 @@ const reLoadItems = (filter='')=>{
   if(filter!==''){
     params['filter']=filter;
   } 
-  axios.get('/api/list',{
+  axios.get('/api/fruits/list',{
                 params:params
             })
             .then((res)=>{
@@ -43,6 +43,7 @@ import Filter from '@/Pages/Fruits/Filter.vue'
 
 <template>
     <Filter @reLoad="reLoadItems"></Filter>
+    <el-card>
     <el-table :data="items" style="width: 100%">
     <el-table-column prop="id" label="id" width="80" />
     <el-table-column prop="name" label="名称" />
@@ -68,6 +69,7 @@ import Filter from '@/Pages/Fruits/Filter.vue'
     </el-table-column>
   </el-table>
   <el-pagination layout="prev, pager, next" :total="itemsTotal" @current-change="setPage"></el-pagination>
+  </el-card>
   <el-button @click="addRef.open()">
     新規作成
   </el-button>

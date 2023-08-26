@@ -10,7 +10,7 @@ const form=reactive({
 });
 const emit = defineEmits(['reLoad']);
 const create=()=>{
-  axios.post('/api/create',form)
+  axios.post('/api/fruits/create',form)
     .then((res)=>{
       ElNotification({
         title: 'Success',

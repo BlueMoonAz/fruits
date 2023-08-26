@@ -18,7 +18,7 @@ const open=(item)=>{
           }
         )
           .then(() => {
-            axios.delete('/api/delete/'+item.id)
+            axios.delete('/api/fruits/delete/'+item.id)
               .then((res)=>{
                 ElNotification({
                   type: 'success',
