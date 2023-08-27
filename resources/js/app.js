@@ -2,13 +2,47 @@ import './bootstrap';
 
 import { createApp } from 'vue';
 import App from './App.vue';
-import ElementPlus from 'element-plus'; //追記
-import 'element-plus/dist/index.css'; //追記
-import { createPinia } from 'pinia'
+import ElementPlus from 'element-plus'; 
+import 'element-plus/dist/index.css';
 
 const app = createApp(App);
 
-app.use(ElementPlus); //追記
-app.use(createPinia());
+app.use(ElementPlus);
+
+import * as vueRouter from "vue-router";
+import Layout from './Layouts/Layout.vue'
+import fruitsList from './Pages/Fruits/List.vue'
+import Login from './Pages/Auth/Login.vue'
+import Logout from './Pages/Auth/Logout.vue'
+
+const routes = [
+    {
+        path: '/layout',
+        name: 'layout',
+        component: Layout
+    },
+    {
+        path: '/fruits',
+        name: 'fruits.list',
+        component: fruitsList
+    },
+    {
+        path: '/',
+        name: 'auth.login',
+        component: Login
+    },
+    {
+        path: '/auth/logout',
+        name: 'auth.logout',
+        component: Logout
+    },
+]
+
+const router = vueRouter.createRouter({
+    history: vueRouter.createWebHistory(),
+    routes,
+});
+
+app.use(router);
 
 app.mount('#app');
