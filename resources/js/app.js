@@ -14,6 +14,9 @@ import Layout from './Layouts/Layout.vue'
 import fruitsList from './Pages/Fruits/List.vue'
 import Login from './Pages/Auth/Login.vue'
 import Logout from './Pages/Auth/Logout.vue'
+import authList from './Pages/Auth/List.vue'
+import authAdd from './Pages/Auth/Add.vue'
+import authEdit from './Pages/Auth/Edit.vue'
 
 const routes = [
     {
@@ -35,6 +38,21 @@ const routes = [
         path: '/auth/logout',
         name: 'auth.logout',
         component: Logout
+    },
+    {
+        path: '/auth/list',
+        name: 'auth.list',
+        component: authList
+    },
+    {
+        path: '/auth/add',
+        name: 'auth.add',
+        component: authAdd
+    },
+    {
+        path: '/auth/edit',
+        name: 'auth.edit',
+        component: authEdit
     },
 ]
 
